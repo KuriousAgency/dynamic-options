@@ -29,10 +29,6 @@ class DynamicOptionsMultiField extends Field
 {
     // Public Properties
     // =========================================================================
-
-    /**
-     * @var string
-     */
     public string $json = '';
 
     // Static Methods
@@ -58,6 +54,7 @@ class DynamicOptionsMultiField extends Field
         $rules = array_merge($rules, [
             ['json', 'string'],
         ]);
+        
         return $rules;
     }
 
@@ -72,7 +69,7 @@ class DynamicOptionsMultiField extends Field
     /**
      * @inheritdoc
      */
-    public function normalizeValue(mixed $value, ElementInterface $element = null): mixed
+    public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         return $value;
     }
@@ -80,7 +77,7 @@ class DynamicOptionsMultiField extends Field
     /**
      * @inheritdoc
      */
-    public function serializeValue(mixed $value, ElementInterface $element = null): mixed
+    public function serializeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         return parent::serializeValue($value, $element);
     }
@@ -104,7 +101,7 @@ class DynamicOptionsMultiField extends Field
     /**
      * @inheritdoc
      */
-    public function getInputHtml(mixed $value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?ElementInterface $element = null): string
     {
         // Register our asset bundle
         //Craft::$app->getView()->registerAssetBundle(DynamicOptionsFieldFieldAsset::class);
@@ -133,8 +130,10 @@ class DynamicOptionsMultiField extends Field
             'name' => $this->handle,
             'namespace' => $namespacedId,
             'prefix' => Craft::$app->getView()->namespaceInputId(''),
-            ];
-        $jsonVars = Json::encode($jsonVars);
+        ];
+
+        Json::encode($jsonVars);
+
         $varName = str_replace('-','',$namespacedId);
         Craft::$app->getView()->registerJs(
             "var $".$varName."Selectize = $('#".$namespacedId."').selectize({
@@ -163,7 +162,7 @@ class DynamicOptionsMultiField extends Field
             '_includes/forms/multiselect',
             [
                 'name' => $this->handle,
-                'values' => is_array($value) ? $value : json_decode($value,true),
+                'values' => is_array($value) ? $value : json_decode((string) $value,true),
                 'field' => $this,
                 'options' => $options,
                 'id' => $id,

@@ -43,10 +43,6 @@ class DynamicOptions extends Plugin
 
     // Public Properties
     // =========================================================================
-
-    /**
-     * @var string
-     */
     public string $schemaVersion = '1.0.0';
 
     // Public Methods
@@ -63,7 +59,7 @@ class DynamicOptions extends Plugin
         Event::on(
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
-            function (RegisterComponentTypesEvent $event) {
+            function (RegisterComponentTypesEvent $event): void {
                 $event->types[] = DynamicOptionsFieldField::class;
                 $event->types[] = DynamicOptionsMultiFieldField::class;
             }
@@ -72,9 +68,7 @@ class DynamicOptions extends Plugin
         Event::on(
             Plugins::class,
             Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
-                if ($event->plugin === $this) {
-                }
+            function (PluginEvent $event) : void {
             }
         );
 

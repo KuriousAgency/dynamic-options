@@ -29,10 +29,6 @@ class DynamicOptionsField extends Field
 {
     // Public Properties
     // =========================================================================
-
-    /**
-     * @var string
-     */
     public string $json = '';
 
     // Static Methods
@@ -55,10 +51,9 @@ class DynamicOptionsField extends Field
     public function rules(): array
     {
         $rules = parent::rules();
-        $rules = array_merge($rules, [
+        return array_merge($rules, [
             ['json', 'string'],
         ]);
-        return $rules;
     }
 
     /**
@@ -72,7 +67,7 @@ class DynamicOptionsField extends Field
     /**
      * @inheritdoc
      */
-    public function normalizeValue(mixed $value, ElementInterface $element = null): mixed
+    public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         return $value;
     }
@@ -80,7 +75,7 @@ class DynamicOptionsField extends Field
     /**
      * @inheritdoc
      */
-    public function serializeValue(mixed $value, ElementInterface $element = null): mixed
+    public function serializeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         return parent::serializeValue($value, $element);
     }
@@ -104,7 +99,7 @@ class DynamicOptionsField extends Field
     /**
      * @inheritdoc
      */
-    public function getInputHtml(mixed $value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?ElementInterface $element = null): string
     {
         // Register our asset bundle
         //Craft::$app->getView()->registerAssetBundle(DynamicOptionsFieldFieldAsset::class);
@@ -134,7 +129,7 @@ class DynamicOptionsField extends Field
             'namespace' => $namespacedId,
             'prefix' => Craft::$app->getView()->namespaceInputId(''),
             ];
-        $jsonVars = Json::encode($jsonVars);
+        Json::encode($jsonVars);
        // Craft::$app->getView()->registerJs("$('#{$namespacedId}-field').DynamicOptionsDynamicOptionsField(" . $jsonVars . ");");
 
         // Render the input template
